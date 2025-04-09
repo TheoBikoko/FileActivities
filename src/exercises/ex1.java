@@ -10,7 +10,6 @@ public class ex1 {
         String newDirectoryPath = "FilesDirectory";
         File directory = new File(newDirectoryPath);
 
-        manager.createDirectory(directory);
         Optional<File> file = manager.showFileWithMaximumSizeInDirectory(directory);
         try {
             if (file.isPresent()) {

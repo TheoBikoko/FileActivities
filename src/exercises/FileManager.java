@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 public class FileManager {
@@ -60,7 +61,7 @@ public class FileManager {
         }
     }
 
-    void createDirectoryFromFileAndViceversa(File directory){
+    void createDirectoryFromFileAndViceversa(File directory) throws IOException {
         File[] fileList = directory.listFiles();
 
         if (directory.isDirectory() && fileList != null) {
@@ -75,6 +76,19 @@ public class FileManager {
                 }
             }
         }
+    }
+
+    List<File> sortFilesInDirectory(File directory, int selection){
+        File[] fileList = directory.listFiles();
+
+        if (directory.isDirectory() && fileList != null) {
+        switch (selection) {
+            case 1 -> Arrays.sort(fileList, Comparator.comparing(File::getName));
+            case 2 -> Arrays.sort(fileList, Comparator.comparing(File::lastModified));
+            case 3 -> Arrays.sort(fileList, Comparator.comparing(File::length));
+            }
+        }
+        return List.of(fileList);
     }
 }
 

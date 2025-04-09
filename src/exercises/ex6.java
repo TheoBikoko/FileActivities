@@ -11,8 +11,7 @@ public class ex6 {
 
         try {
             manager.createDirectoryFromFileAndViceversa(directory);
-        } catch (
-                IOException e){
+        } catch (IOException e){
             System.out.println(e.getMessage());
         }
     }
