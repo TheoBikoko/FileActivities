@@ -60,7 +60,7 @@ public class FileManager {
         }
     }
 
-    void createDirectoryFromFileAndViceversa(File directory) throws IOException {
+    void createDirectoryFromFileAndViceversa(File directory){
         File[] fileList = directory.listFiles();
 
         if (directory.isDirectory() && fileList != null) {
@@ -76,8 +76,6 @@ public class FileManager {
             }
         }
     }
-
-
 }
 
 
