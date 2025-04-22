@@ -1,4 +1,6 @@
-package exercises;
+package exercises.pt13;
+import exercises.FileManager;
+
 import java.io.File;
 
 public class ex2 {

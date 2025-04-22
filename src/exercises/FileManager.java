@@ -1,6 +1,8 @@
 package exercises;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -8,14 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class FileManager {
+    //Pt13
 
-    void createDirectory(File directory) {
+    public void createDirectory(File directory) {
         if (!directory.mkdir()) {
             System.out.println("This directory already exists.");
         } else System.out.println("Directory has been created.");
     }
 
-    Optional<File> showFileWithMaximumSizeInDirectory(File directory) {
+    public Optional<File> showFileWithMaximumSizeInDirectory(File directory) {
         File[] fileList = directory.listFiles();
         if (directory.isDirectory() && fileList != null) {
            return Arrays.stream(fileList).max(Comparator.comparing(File::length));
@@ -23,7 +26,7 @@ public class FileManager {
         return Optional.empty();
     }
 
-    void showFilesIfTheyContainInputWord(File directory, String inputWord){
+    public void showFilesIfTheyContainInputWord(File directory, String inputWord){
         File[] fileList = directory.listFiles();
         if (directory.isDirectory() && fileList != null) {
             for(File file: fileList){
@@ -34,7 +37,7 @@ public class FileManager {
         }
     }
 
-    void fileInventory(File directory){
+    public void fileInventory(File directory){
         File[] fileList = directory.listFiles();
 
         if (directory.isDirectory() && fileList != null) {
@@ -49,7 +52,7 @@ public class FileManager {
             }
         }
 
-    void deleteFilesThatBeginWithANumber(File directory) {
+    public void deleteFilesThatBeginWithANumber(File directory) {
         File[] fileList = directory.listFiles();
 
         if (directory.isDirectory() && fileList != null) {
@@ -61,7 +64,7 @@ public class FileManager {
         }
     }
 
-    void createDirectoryFromFileAndViceversa(File directory) throws IOException {
+    public void createDirectoryFromFileAndViceversa(File directory) throws IOException {
         File[] fileList = directory.listFiles();
 
         if (directory.isDirectory() && fileList != null) {
@@ -78,7 +81,7 @@ public class FileManager {
         }
     }
 
-    List<File> sortFilesInDirectory(File directory, int selection){
+    public List<File> sortFilesInDirectory(File directory, int selection){
         File[] fileList = directory.listFiles();
 
         if (directory.isDirectory() && fileList != null) {
@@ -89,6 +92,62 @@ public class FileManager {
             }
         }
         return List.of(fileList);
+    }
+
+    //Pt14
+    public StringBuilder readFileContent(String path){
+        try {
+            StringBuilder content = new StringBuilder();
+            FileReader fileReader = new FileReader(path);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line = reader.readLine();
+
+            while (line != null){
+                content.append(line).append("\n");
+                line = reader.readLine();
+            }
+            reader.close();
+            return content;
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public String readFileContentInAllCaps(String path){
+        try {
+            StringBuilder content = new StringBuilder();
+            FileReader fileReader = new FileReader(path);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line = reader.readLine();
+
+            while (line != null){
+                content.append(line).append("\n");
+                line = reader.readLine();
+            }
+            reader.close();
+            return content.toString().toUpperCase();
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public boolean checkStringInFile(String path, String string){
+        try {
+            FileReader fileReader = new FileReader(path);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line = reader.readLine();
+
+            while (line != null){
+
+                line = reader.readLine();
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }
 
