@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileManager {
     //Pt13
@@ -95,10 +98,10 @@ public class FileManager {
     }
 
     //Pt14
-    public StringBuilder readFileContent(String path){
+    public StringBuilder readFileContent(File file){
         try {
             StringBuilder content = new StringBuilder();
-            FileReader fileReader = new FileReader(path);
+            FileReader fileReader = new FileReader(file);
             BufferedReader reader = new BufferedReader(fileReader);
             String line = reader.readLine();
 
@@ -115,10 +118,10 @@ public class FileManager {
         }
     }
 
-    public String readFileContentInAllCaps(String path){
+    public String readFileContentInAllCaps(File file){
         try {
             StringBuilder content = new StringBuilder();
-            FileReader fileReader = new FileReader(path);
+            FileReader fileReader = new FileReader(file);
             BufferedReader reader = new BufferedReader(fileReader);
             String line = reader.readLine();
 
@@ -135,21 +138,49 @@ public class FileManager {
         }
     }
 
-    public boolean checkStringInFile(String path, String string){
+    public boolean checkStringInFile(File file, String string){
         try {
-            FileReader fileReader = new FileReader(path);
+            FileReader fileReader = new FileReader(file);
             BufferedReader reader = new BufferedReader(fileReader);
             String line = reader.readLine();
 
             while (line != null){
-
+                if (line.toLowerCase().contains(string)) {
+                   return true;
+                }
                 line = reader.readLine();
             }
+            return false;
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+        return false;
+    }
+
+    public String stringCounter (File file, String string){
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line = reader.readLine();
+            Pattern pattern = Pattern.compile("\\b"+ string + "\\b");
+            Matcher matcher;
+
+            int counter = 0;
+            while (line != null){
+                matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    counter++;
+                }
+                line = reader.readLine();
+            }
+            return ("The word " + string + " has been found " + counter + " times.");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
+
 
 
 
