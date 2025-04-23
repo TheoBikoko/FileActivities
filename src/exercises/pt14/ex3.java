@@ -10,7 +10,7 @@ public class ex3 {
         File file = new File ("FilesDirectory/textSample.txt");
         String input = "wonders";
 
-        boolean verification = fileManager.checkStringInFile(file,input);
+        boolean verification = fileManager.checkIfStringIsInFile(file,input);
         System.out.println(verification);
     }
 }
