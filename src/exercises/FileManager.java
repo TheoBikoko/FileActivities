@@ -1,14 +1,7 @@
 package exercises;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -86,15 +79,15 @@ public class FileManager {
 
     public List<File> sortFilesInDirectory(File directory, int selection){
         File[] fileList = directory.listFiles();
-
-        if (directory.isDirectory() && fileList != null) {
-        switch (selection) {
-            case 1 -> Arrays.sort(fileList, Comparator.comparing(File::getName));
-            case 2 -> Arrays.sort(fileList, Comparator.comparing(File::lastModified));
-            case 3 -> Arrays.sort(fileList, Comparator.comparing(File::length));
+            if (directory.isDirectory() && fileList != null) {
+                switch (selection) {
+                    case 1 -> Arrays.sort(fileList, Comparator.comparing(File::getName));
+                    case 2 -> Arrays.sort(fileList, Comparator.comparing(File::lastModified));
+                    case 3 -> Arrays.sort(fileList, Comparator.comparing(File::length));
+                }
+                return List.of(fileList);
             }
-        }
-        return List.of(fileList);
+            return null;
     }
 
     //Pt14
@@ -105,7 +98,7 @@ public class FileManager {
             BufferedReader reader = new BufferedReader(fileReader);
             String line = reader.readLine();
 
-            while (line != null){
+            while (Objects.nonNull(line)){
                 content.append(line).append("\n");
                 line = reader.readLine();
             }
@@ -125,7 +118,7 @@ public class FileManager {
             BufferedReader reader = new BufferedReader(fileReader);
             String line = reader.readLine();
 
-            while (line != null){
+            while (Objects.nonNull(line)){
                 content.append(line).append("\n");
                 line = reader.readLine();
             }
@@ -144,12 +137,13 @@ public class FileManager {
             BufferedReader reader = new BufferedReader(fileReader);
             String line = reader.readLine();
 
-            while (line != null){
+            while (Objects.nonNull(line)){
                 if (line.toLowerCase().contains(string)) {
                    return true;
                 }
                 line = reader.readLine();
             }
+            reader.close();
             return false;
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -166,19 +160,51 @@ public class FileManager {
             Matcher matcher;
 
             int counter = 0;
-            while (line != null){
+            while (Objects.nonNull(line)){
                 matcher = pattern.matcher(line);
                 if (matcher.find()) {
                     counter++;
                 }
                 line = reader.readLine();
             }
+            reader.close();
             return ("The word " + string + " has been found " + counter + " times.");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
         return null;
     }
+
+    public String writeStringCounterInANewDocument (File file, String string){
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line = reader.readLine();
+            Pattern pattern = Pattern.compile("\\b"+ string + "\\b");
+            Matcher matcher;
+            File newFile = new File(file.getCanonicalFile() + ".count");
+            FileWriter writer = new FileWriter(newFile, true);
+
+            int counter = 0;
+
+            while (Objects.nonNull(line)){
+                matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    counter++;
+                }
+                line = reader.readLine();
+            }
+            String result = "The word " + string + " has been found " + counter + " times.";
+            writer.write(result);
+            writer.close();
+            return "New file created with the result located in: " + newFile.getCanonicalFile() +".";
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
 }
 
 
