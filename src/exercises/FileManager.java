@@ -7,13 +7,14 @@ import java.util.regex.Pattern;
 
 public class FileManager {
     //Pt13
-
+    //1
     public void createDirectory(File directory) {
         if (!directory.mkdir()) {
             System.out.println("This directory already exists.");
         } else System.out.println("Directory has been created.");
     }
 
+    //2
     public Optional<File> showFileWithMaximumSizeInDirectory(File directory) {
         File[] fileList = directory.listFiles();
         if (directory.isDirectory() && fileList != null) {
@@ -22,6 +23,7 @@ public class FileManager {
         return Optional.empty();
     }
 
+    //3
     public void showFilesIfTheyContainInputWord(File directory, String inputWord){
         File[] fileList = directory.listFiles();
         if (directory.isDirectory() && fileList != null) {
@@ -33,6 +35,7 @@ public class FileManager {
         }
     }
 
+    //4
     public void fileInventory(File directory){
         File[] fileList = directory.listFiles();
 
@@ -48,6 +51,7 @@ public class FileManager {
             }
         }
 
+    //5
     public void deleteFilesThatBeginWithANumber(File directory) {
         File[] fileList = directory.listFiles();
 
@@ -60,6 +64,7 @@ public class FileManager {
         }
     }
 
+    //6
     public void createDirectoryFromFileAndViceversa(File directory) throws IOException {
         File[] fileList = directory.listFiles();
 
@@ -77,6 +82,7 @@ public class FileManager {
         }
     }
 
+    //7
     public List<File> sortFilesInDirectory(File directory, int selection){
         File[] fileList = directory.listFiles();
             if (directory.isDirectory() && fileList != null) {
@@ -91,6 +97,7 @@ public class FileManager {
     }
 
     //Pt14
+    //1
     public StringBuilder readFileContent(File file){
         try {
             StringBuilder content = new StringBuilder();
@@ -105,12 +112,13 @@ public class FileManager {
             reader.close();
             return content;
 
-        }catch (Exception e){
+        }catch (IOException e){
             System.out.println(e.getMessage());
             return null;
         }
     }
 
+    //2
     public String readFileContentInAllCaps(File file){
         try {
             StringBuilder content = new StringBuilder();
@@ -125,13 +133,14 @@ public class FileManager {
             reader.close();
             return content.toString().toUpperCase();
 
-        }catch (Exception e){
+        }catch (IOException e){
             System.out.println(e.getMessage());
             return null;
         }
     }
 
-    public boolean checkStringInFile(File file, String string){
+    //3
+    public boolean checkIfStringIsInFile(File file, String string){
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader reader = new BufferedReader(fileReader);
@@ -145,12 +154,13 @@ public class FileManager {
             }
             reader.close();
             return false;
-        }catch (Exception e){
+        }catch (IOException e){
             System.out.println(e.getMessage());
         }
         return false;
     }
 
+    //4
     public String stringCounter (File file, String string){
         try {
             FileReader fileReader = new FileReader(file);
@@ -169,12 +179,13 @@ public class FileManager {
             }
             reader.close();
             return ("The word " + string + " has been found " + counter + " times.");
-        }catch (Exception e){
+        }catch (IOException e){
             System.out.println(e.getMessage());
         }
         return null;
     }
 
+    //5
     public String writeStringCounterInANewDocument (File file, String string){
         try {
             FileReader fileReader = new FileReader(file);
@@ -199,12 +210,13 @@ public class FileManager {
             writer.close();
             return "New file created with the result located in: " + newFile.getCanonicalFile() +".";
 
-        }catch (Exception e){
+        }catch (IOException e){
             System.out.println(e.getMessage());
         }
         return null;
     }
 
+    //6
     public String rewriteFileInAllCaps(File file){
         try {
             FileReader fileReader = new FileReader(file);
@@ -225,12 +237,13 @@ public class FileManager {
 
             return "The content of the file : " + file.getCanonicalFile() +" has been rewritten in all caps.";
         }
-        catch (Exception e){
+        catch (IOException e){
             System.out.println(e.getMessage());
             return null;
         }
     }
 
+    //7
     public String copyFileContentIntoNewFile(File file){
         try {
             FileReader fileReader = new FileReader(file);
@@ -252,9 +265,9 @@ public class FileManager {
             writer.write(content.toString());
             writer.close();
 
-            return "The content of the file : " + file.getCanonicalFile() +" has been copied into the file " + newFile.getCanonicalFile();
+            return "The content of the file : " + file.getCanonicalFile() +" has been copied into the new file " + newFile.getCanonicalFile();
         }
-        catch (Exception e){
+        catch (IOException e){
             System.out.println(e.getMessage());
             return null;
         }
