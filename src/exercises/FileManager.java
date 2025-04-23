@@ -205,6 +205,61 @@ public class FileManager {
         return null;
     }
 
+    public String rewriteFileInAllCaps(File file){
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fileReader);
+            StringBuilder content = new StringBuilder();
+            String line = reader.readLine();
+
+            while(Objects.nonNull(line)) {
+                content.append(line).append("\n");
+                line = reader.readLine();
+            }
+
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+
+            writer.write(content.toString().toUpperCase());
+            writer.close();
+
+            return "The content of the file : " + file.getCanonicalFile() +" has been rewritten in all caps.";
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public String copyFileContentIntoNewFile(File file){
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fileReader);
+            StringBuilder content = new StringBuilder();
+            String line = reader.readLine();
+
+            while(Objects.nonNull(line)) {
+                content.append(line).append("\n");
+                line = reader.readLine();
+            }
+
+            int finalPosition = file.getName().lastIndexOf(".");
+            String newFileName = file.getName().substring(0, finalPosition);
+
+            File newFile = new File(file.getParent() + "/" + newFileName + "2.txt");
+            FileWriter fileWriter = new FileWriter(newFile);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+            writer.write(content.toString());
+            writer.close();
+
+            return "The content of the file : " + file.getCanonicalFile() +" has been copied into the file " + newFile.getCanonicalFile();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 }
 
 
