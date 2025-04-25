@@ -332,19 +332,65 @@ public class FileManager {
             System.out.println(e.getMessage());
             return null;
         }
+    }
 
         //10
+        public String analitzador(File file){
+        try {
+            File outputFile = new File("FilesDirectory/paraules.txt");
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outputFile, true));
+            int counter = 0;
+            while ((byte) bis.read() != -1){
+                counter++;
+            }
+            bos.write((file.getCanonicalFile() + " " + counter + "\n").getBytes());
+            bis.close();
+            bos.close();
 
+            return "The result of the file " + file.getCanonicalFile() + " has been saved in the file " + outputFile.getCanonicalFile();
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
         //11
+        public String getAverageNumberFromFileBytes(File file){
+        try{
+            DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file, true)));
+            int total = 0;
+            int counter = 0;
 
+            while (dis.available() >= 4){
+                total += dis.readInt();
+                counter++;
+            }
+
+            double average = (double) total/counter;
+            dos.writeUTF(" Average result" + average);
+            dis.close();
+            dos.close();
+            return "The average result has been saved in the file: " + file.getCanonicalFile();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
         //12
+        public String sortNumbersFromFileBytes(File file){
+        try{
+            RandomAccessFile raf = new RandomAccessFile(file, "rw");
 
-
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
         //13
     }
-}
 
 
 
