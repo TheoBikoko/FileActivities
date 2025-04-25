@@ -381,13 +381,15 @@ public class FileManager {
 
         //12
         public String sortNumbersFromFileBytes(File file){
-        try{
-            RandomAccessFile raf = new RandomAccessFile(file, "rw");
-
+        try(RandomAccessFile raf = new RandomAccessFile(file, "rw")){
+            byte[] byteArray = new byte[(int)raf.length()];
+            Arrays.sort(byteArray);
+            raf.write(byteArray);
+            return Arrays.toString(byteArray);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            return null;
         }
-        return null;
     }
         //13
     }
