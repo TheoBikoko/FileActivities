@@ -380,23 +380,31 @@ public class FileManager {
     }
 
         //12
-        public void sortNumbersFromFileBytes(File file){
+        public String sortNumbersFromFileBytes(File file){
         try(RandomAccessFile raf = new RandomAccessFile(file, "rw")){
-            for (int i = 0; i < file.length(); i+=4) {
-                System.out.println(raf.readInt());
-                int currentNumber = raf.readInt();
-                raf.seek(i+4);
-                int nextNumber = raf.readInt();
-//                System.out.println(raf.readInt());
-//                if (nextNumber < currentNumber){
-//                    raf.seek(i);
-//                    raf.write(nextNumber);
-//                }
+            int[] numbersArray = new int[((int) file.length())/4];
+            for (int i = 0; i < file.length();) {
+                for (int j = 0; j < numbersArray.length; j++) {
+                raf.seek(i);
+                    numbersArray[j] = raf.readInt();
+                    i+=4;
+                }
             }
+
+            Arrays.sort(numbersArray);
+
+            for (int j = 0; j < file.length(); j+=4) {
+                raf.seek(j);
+                raf.writeInt(numbersArray[j/4]);
+                raf.seek(j);
+            }
+            return "The numbers of the file " + file.getCanonicalFile() + " have been sorted as follows: " + Arrays.toString(numbersArray);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            return null;
         }
     }
+
         //13
     }
 
