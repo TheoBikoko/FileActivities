@@ -8,6 +8,6 @@ public class ex12 {
     public static void main(String[] args) {
         FileManager manager= new FileManager();
         File file = new File("FilesDirectory/numeros2.bin");
-        System.out.println(manager.sortNumbersFromFileBytes(file));
+        manager.sortNumbersFromFileBytes(file);
     }
 }

@@ -380,15 +380,21 @@ public class FileManager {
     }
 
         //12
-        public String sortNumbersFromFileBytes(File file){
+        public void sortNumbersFromFileBytes(File file){
         try(RandomAccessFile raf = new RandomAccessFile(file, "rw")){
-            byte[] byteArray = new byte[(int)raf.length()];
-            Arrays.sort(byteArray);
-            raf.write(byteArray);
-            return Arrays.toString(byteArray);
+            for (int i = 0; i < file.length(); i+=4) {
+                System.out.println(raf.readInt());
+                int currentNumber = raf.readInt();
+                raf.seek(i+4);
+                int nextNumber = raf.readInt();
+//                System.out.println(raf.readInt());
+//                if (nextNumber < currentNumber){
+//                    raf.seek(i);
+//                    raf.write(nextNumber);
+//                }
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            return null;
         }
     }
         //13
