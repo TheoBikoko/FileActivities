@@ -1,5 +1,7 @@
 package exercises;
 
+import exercises.pt14.ex13.Student;
+
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -385,7 +387,7 @@ public class FileManager {
             int[] numbersArray = new int[((int) file.length())/4];
             for (int i = 0; i < file.length();) {
                 for (int j = 0; j < numbersArray.length; j++) {
-                raf.seek(i);
+                    raf.seek(i);
                     numbersArray[j] = raf.readInt();
                     i+=4;
                 }
@@ -406,6 +408,19 @@ public class FileManager {
     }
 
         //13
+    public String database(File file, Student student){
+        try(RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+            raf.seek(student.getIdStudent() - 1);
+            raf.writeInt(student.getIdStudent());
+            raf.writeChars(student.getName());
+            raf.writeChars(student.getSurname());
+            raf.writeInt(student.getAge());
+            return "The students have been added to the new database " + file.getCanonicalFile();
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
     }
 
 
